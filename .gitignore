@@ -1,0 +1,21 @@
+# Java / Maven
+/target/
+*.log
+*.tmp
+*.class
+
+# IDEs
+/.idea/
+/.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Other
+*.swp
+
