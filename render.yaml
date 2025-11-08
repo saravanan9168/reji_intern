@@ -1,12 +1,13 @@
 services:
   - type: web
     name: math-assistant
-    env: docker
+    env: java
     plan: free
     branch: main
-  dockerfilePath: ./Dockerfile
+    buildCommand: mvn -DskipTests package
+    startCommand: java -jar target/math-assistant-0.0.1-SNAPSHOT.jar
     autoDeploy: true
-    # Optional: health check path Render will poll to determine service health
+    # Health check path Render will poll to determine service health
     healthCheckPath: /health
     # Example env vars (Render allows env vars via UI or manifest)
     envVars:
