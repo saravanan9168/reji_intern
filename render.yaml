@@ -7,4 +7,8 @@ services:
     dockerfilePath: Dockerfile
     autoDeploy: true
     # Optional: health check path Render will poll to determine service health
-    healthCheckPath: /
+    healthCheckPath: /health
+    # Example env vars (Render allows env vars via UI or manifest)
+    envVars:
+      - key: JAVA_OPTS
+        value: -Xms128m -Xmx512m
