@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Maven local repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build with Maven (skip tests)
+        run: mvn -B -DskipTests package
+
+      - name: Show built artifact
+        run: ls -la target | sed -n '1,200p' || true
+
+      - name: Build Docker image
+        run: |
+          docker build -t math-assistant-ci .
+
+      - name: Verify Docker image built
+        run: docker images math-assistant-ci --format "{{.Repository}}:{{.Tag}}  {{.Size}}"
