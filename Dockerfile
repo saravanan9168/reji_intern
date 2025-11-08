@@ -17,3 +17,4 @@ COPY --from=build /workspace/target/*.jar /app/app.jar
 EXPOSE 8080
 ENV JAVA_OPTS=""
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+# Rebuild trigger: updated at 2025-11-09 to force Render to re-transfer Dockerfile
