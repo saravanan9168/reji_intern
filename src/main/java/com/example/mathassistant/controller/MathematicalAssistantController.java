@@ -1,18 +1,22 @@
 package com.example.mathassistant.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 @Controller
 public class MathematicalAssistantController {
+
+    private static final Logger logger = LoggerFactory.getLogger(MathematicalAssistantController.class);
 
     @GetMapping("/")
     public String index() {
@@ -46,6 +50,7 @@ public class MathematicalAssistantController {
             result = "Result: " + res;
         } catch (Exception e) {
             result = "Error: Invalid input or division by zero";
+            logger.error("Calculation failed for inputs num1='{}' num2='{}' operation='{}'", num1Str, num2Str, operation, e);
         }
         model.addAttribute("result", result);
         return "index";
@@ -158,6 +163,7 @@ public class MathematicalAssistantController {
             model.addAttribute("n", n); // For title
 
         } catch (Exception e) {
+            logger.error("Failed to generate Fibonacci SVG for n='{}'", nStr, e);
             model.addAttribute("error", "Error: Invalid n or too large.");
             model.addAttribute("n", nStr); // For title
             return "index";
