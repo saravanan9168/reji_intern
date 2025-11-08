@@ -4,7 +4,7 @@ services:
     env: docker
     plan: free
     branch: main
-    dockerfilePath: Dockerfile
+  dockerfilePath: ./Dockerfile
     autoDeploy: true
     # Optional: health check path Render will poll to determine service health
     healthCheckPath: /health
